@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hanti Emails</title>
+</head>
+<body>
+    <h1>Hanti Email List</h1>
+    <p>Total: <span id="count">Loading...</span></p>
+    
+    <div id="emails">Loading emails...</div>
+
+    <script>
+        fetch('/api/admin/waitlist')
+        .then(response => response.json())
+        .then(emails => {
+            document.getElementById('count').textContent = emails.length;
+            
+            let html = '';
+            emails.forEach((email, index) => {
+                html += (index + 1) + '. ' + email.email + '<br>';
+            });
+            
+            document.getElementById('emails').innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById('emails').innerHTML = 'Error: ' + error.message;
+        });
+    </script>
+</body>
+</html>
